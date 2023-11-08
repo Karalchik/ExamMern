@@ -10,7 +10,7 @@ const userSchema=new Schema({
         trim:true,
         minlength:3
     },
-    passwort:{type:String,requred:true},
+    password:{type:String,requred:true},
     isadmin:{type:Boolean,requred:true},
     contacts:{type:String,requred:true},
     history:{type:Array,requred:true},

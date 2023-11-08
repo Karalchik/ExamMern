@@ -6,12 +6,13 @@ router.route('/').get((req,res)=>{
 });
 
 router.route('/add').post((req,res)=>{
+    console.log(req.body);
     const username=req.body.username;
-    const passwort=req.body.passwort;
+    const password=req.body.passwort;
     const isadmin=Boolean(req.body.isadmin);
     const contacts=req.body.contacts;
     const history=Array(req.body.history);
-    const newUser=new User({username});
+    const newUser=new User({username,password,isadmin,contacts,history});
     newUser.save().then(()=>res.json('User added!')).catch(err=>res.status(400).json('Error: '+err));
 });
 
