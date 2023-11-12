@@ -1,3 +1,4 @@
++++++++++++++++++++++++++++++++++++++++++++++++++++
 ## Pages: 
 * Main Button(our icon)
 * Home
@@ -6,7 +7,8 @@
 * Profile
 * Choose leng
 * our number
-
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+----------------------------------------------------
 ## Firstly:
 *  ## Create a few components for a page:
     * Find boat by id
@@ -19,4 +21,9 @@
 * Put entrance in navbar
 * Put components in all pages
 * If all work and we don't need something more, we can go to css
+----------------------------------------------------
+ ## Components:
+ * Create, edit , delete, search , see , most popular boats
+ * Create, edit users
+ * Create, edit , delete request 
  
