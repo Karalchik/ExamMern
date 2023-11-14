@@ -40,7 +40,7 @@ export default class Navbar extends Component {
           </div>
           </li>
           <li className="navbar-item">
-          <Link to="/create_user" className="nav-link">PROFILE</Link>
+          <Link to="/logIn_user" className="nav-link">PROFILE</Link>
           </li>
           <li className="navbar-item">
           <div>

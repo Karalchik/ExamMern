@@ -6,7 +6,7 @@ import Navbar from "./components/navbar.component"
 
 import CreateUser from "./components_user/create-user.component";
 import EditUser from "./components_user/edit-user.component";
-import LoginUser from "./components_user/login-user.component";
+import LogInUser from "./components_user/login-user.component";
 
 import CreateRequest from "./components_request/create-request.component";
 import DeleteRequest from "./components_request/delete-request.component";
@@ -30,6 +30,7 @@ function App() {
         <Route path="/create_user" element={<CreateUser />}></Route>
         <Route path="/create_request" element={<CreateRequest />}></Route>
         <Route path="/create_boat" element={<CreateBoat />}></Route>
+        <Route path="/logIn_user" element={<LogInUser />}></Route>
         </Routes>  
       </div> 
     </Router>
