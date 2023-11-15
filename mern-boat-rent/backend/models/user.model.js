@@ -10,6 +10,12 @@ const userSchema=new Schema({
         trim:true,
         minlength:3
     },
+    email:{
+        type:String,
+        required:true,
+        unique:true,
+        minlength:3
+    },
     password:{type:String,requred:true,minlength:5},
     isadmin:{type:Boolean,requred:true},
     contacts:{type:String,requred:true,minlength:3},
