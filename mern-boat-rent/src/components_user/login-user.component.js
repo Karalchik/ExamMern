@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link, Navigate } from 'react-router-dom';
 
-export default class CreateUser extends Component {
+export default class LoginUser extends Component {
     itemErr=document.getElementById('errors');
     isCorrect=true;
     constructor(props){
@@ -25,10 +26,17 @@ export default class CreateUser extends Component {
         password:e.target.value
       });
     }
+    validateEmail = (email) => {
+      return String(email)
+        .toLowerCase()
+        .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+    };
   
     onCheckShow(e){
       var x = document.getElementById("password");
-      if (x.type === "password") {
+      if (x.type == "password") {
         x.type = "text";
       } else {
         x.type = "password";
@@ -36,17 +44,16 @@ export default class CreateUser extends Component {
     }
     onSubmit(e){
       e.preventDefault();
-      foreach(item in this.state.email);{
-        if(item=='@'){
-          this.isCorrect=true;
-        }else{
-          this.itemErr.textContent="You didn't write an email";
-          this.isCorrect=false;
-        }
+
+      if(this.validateEmail(this.state.email)){
+        this.isCorrect=true;
+      }else{
+        this.itemErr.innerHTML="You didn't write an email";
+        this.isCorrect=false;
       }
       
       if(this.isCorrect==true){
-        
+        Navigate({to:'/'});
       }
     }
   render() {
@@ -68,7 +75,7 @@ export default class CreateUser extends Component {
               />
               <div>
                 <label>Password: </label>
-                <input type="checkbox" onclick={this.onCheckShow}>Show Password</input>
+                <input type="checkbox" onClick={this.onCheckShow}/>Show Password
               </div>
               <input  type="password"
                 required
@@ -80,7 +87,7 @@ export default class CreateUser extends Component {
               />
           </div>
           <div className="form-group">
-            <input type="submit" value="Sign-Up" className="btn btn-primary" />
+            <input type="submit" value="Sign-In" className="btn btn-primary" />
           </div>
           <Link to="/create_user" className="nav-link">Sign-Up</Link>
         </form>
