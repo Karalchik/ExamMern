@@ -5,6 +5,16 @@ router.route('/').get((req,res)=>{
     User.find().then(users=>res.json(users)).catch(err=>res.statusMessage(400).json('Error: '+err));
 });
 
+
+router.route('/auth').get((req,res)=>{
+    if(req.session.username){
+      return res.json({valid:true,username:req.session.username})
+    }
+    else{
+      return res.json({valid:false})
+    }
+  })
+
 router.route('/add').post((req,res)=>{
     console.log(req.body);
     const username=req.body.username;

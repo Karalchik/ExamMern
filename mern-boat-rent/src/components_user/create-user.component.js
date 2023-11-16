@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link,Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default class CreateUser extends Component {
-  itemErr=document.getElementById('errors');
   constructor(props){
     super(props);
     this.onChangeUsername=this.onChangeUsername.bind(this);
@@ -19,6 +18,7 @@ export default class CreateUser extends Component {
       history:new Array(),
       password:'',
       isadmin:false,
+      text:'',
     };
   }
 
@@ -41,7 +41,7 @@ export default class CreateUser extends Component {
         email:e.target.value
       });
     }else{
-      this.itemErr.innerHTML="You didn't write an email";
+      this.state.text="You didn't write an email";
     }
   }
   onChangePassword(e){
@@ -57,7 +57,7 @@ export default class CreateUser extends Component {
 
   onCheckShow(e){
     var x = document.getElementById("password");
-    if (x.type == "password") {
+    if (x.type === "password") {
       x.type = "text";
     } else {
       x.type = "password";
@@ -84,16 +84,18 @@ export default class CreateUser extends Component {
         history:new Array(),
         password:'',
         isadmin:false,
-    }).then(res=>{Navigate({to:'/'})});
+    }).then(res=>{
+      window.location.assign('/');
+    });
   }
 
   render() {
     return (
       <div>
   <h3>Sign-Up</h3>
-  <div>
-    <p id="errors"></p>
-  </div>
+  <div className="form-group">
+          <p>{this.state.text}</p>
+        </div>
   <form onSubmit={this.onSubmit}>
     <div className="form-group"> 
         <label>Username: </label>

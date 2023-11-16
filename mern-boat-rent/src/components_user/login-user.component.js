@@ -1,27 +1,29 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default class LoginUser extends Component {
-    itemErr=document.getElementById('errors');
-    isCorrect=true;
     constructor(props){
       super(props);
       this.onChangeEmail=this.onChangeEmail.bind(this);
       this.onChangePassword=this.onChangePassword.bind(this);
       this.onSubmit=this.onSubmit.bind(this);
-  
+
       this.state={
+        users:[],
         email:'',
         password:'',
+        text:'',
       };
     }
     onChangeEmail(e){
+      console.log(e.target.value);
         this.setState({
             email:e.target.value
           });
     }
     onChangePassword(e){
+      console.log(e.target.value);
       this.setState({
         password:e.target.value
       });
@@ -36,7 +38,7 @@ export default class LoginUser extends Component {
   
     onCheckShow(e){
       var x = document.getElementById("password");
-      if (x.type == "password") {
+      if (x.type === "password") {
         x.type = "text";
       } else {
         x.type = "password";
@@ -45,23 +47,34 @@ export default class LoginUser extends Component {
     onSubmit(e){
       e.preventDefault();
 
+      axios.defaults.withCredentials=true;
+      const newUser={
+        email:this.state.email,
+        password:this.state.password,
+      };
+
+      axios.get('http://localhost:5000/users/').then(response=>{
+        this.setState({users:response.data});
+      }).catch((error)=>{
+        console.log(error);
+      })
+
       if(this.validateEmail(this.state.email)){
-        this.isCorrect=true;
+        this.state.users.forEach((user)=>{
+          if(user.email===newUser.email && user.password===newUser.password){
+            window.location.assign('/');
+          }
+        })
       }else{
-        this.itemErr.innerHTML="You didn't write an email";
-        this.isCorrect=false;
-      }
-      
-      if(this.isCorrect==true){
-        Navigate({to:'/'});
+        this.state.text="Your email or password is incorrect";
       }
     }
   render() {
     return (
         <div>
         <h3>Sign-In</h3>
-        <div>
-          <p id="errors"></p>
+        <div className="form-group">
+          <p>{this.state.text}</p>
         </div>
         <form onSubmit={this.onSubmit}>
           <div className="form-group"> 

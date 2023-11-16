@@ -1,4 +1,4 @@
-import React, { Navigate,Component } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 
 export default class Home extends Component{
@@ -8,23 +8,26 @@ export default class Home extends Component{
         this.state={username:''};
     }
 
-    componentDidMount(){
-        axios.get('/').then(res=>{
-            if(res.data.valid){
-                this.setState({
-                    username:res.data.username
-                  });
-            }
-            else{
-                Navigate({to:'/login_user'});
-            }
-        }).catch(err=>console.log(err));
-      }
-    render() { 
+    somethingsToDo(){
+        axios.get('users/auth').then(res=>{
+            console.log(res.data.username);
+        if(res.data.valid){
+            console.log(res.data.username);
+            this.setState({
+                username:res.data.username
+                });
+        }
+        else{
+            //window.location.assign('login_user');
+        }
+    }).catch(err=>console.log(err));
+    }
+    render() {
+        this.somethingsToDo();
         return (
         <div>
             <h1>Home Page</h1>
-            <h3>Welcom{this.state.username}</h3>
+            <h3>Welcom {this.state.username}</h3>
         </div>
         )
     }
