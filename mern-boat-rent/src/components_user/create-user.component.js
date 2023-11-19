@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import axios from '../http-common';
 import { Link } from 'react-router-dom';
 
 export default class CreateUser extends Component {

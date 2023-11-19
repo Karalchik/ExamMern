@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import axios from '../http-common';
 
 export default class CreateRequest extends Component {
   constructor(props){

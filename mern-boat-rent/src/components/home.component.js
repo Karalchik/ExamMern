@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import axios from '../http-common';
 
 export default class Home extends Component{
 
     constructor(props){
         super(props);
-        this.state={username:''};
+        this.state={user:[]};
+        this.somethingsToDo();
     }
 
     somethingsToDo(){
-        axios.get('users/auth').then(res=>{
-            console.log(res.data.username);
+        console.log("running");
+        axios.get('users/auth', {
+            withCredentials: true,
+        }).then(res=>{
         if(res.data.valid){
-            console.log(res.data.username);
             this.setState({
-                username:res.data.username
+                user:res.data.user
                 });
         }
         else{
@@ -22,34 +24,16 @@ export default class Home extends Component{
         }
     }).catch(err=>console.log(err));
     }
+    componentWillUnmount(){
+        console.log("unmount");
+    }
     render() {
-        this.somethingsToDo();
         return (
         <div>
             <h1>Home Page</h1>
-            <h3>Welcom {this.state.username}</h3>
+            <h3>Welcom {this.state.user.username}</h3>
         </div>
         )
     }
+    
 }
-
-/*export default function Home() {
-    const [name,setName]=this.useState('') 
-
-    this.useEffect(()=>{
-        axios.get('/').then(res=>{
-            if(res.data.valid){
-                setName(res.data.username);
-            }
-            else{
-                Navigate({to:'/login_user'});
-            }
-        }).catch(err=>console.log(err));
-    })
-    return (
-    <div>
-        <h1>Home Page</h1>
-        <h3>Welcom{this.username}</h3>
-    </div>
-    )
-}*/

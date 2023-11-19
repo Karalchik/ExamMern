@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+//const proxy = require('express-http-proxy');
 
 require('dotenv').config();
 
@@ -13,14 +14,15 @@ const port = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(cookieParser());
-app.use(bodyParser.json());
 app.use(session({
-  secret:'secret',
-  resave:false,
-  saveUninitialized:false,
-  cookie:{
-    secure:false,
-    maxAge:1000*60*60*24
+  secret: 'kljhdf ldfks jh 45jh',
+  resave: false,
+  saveUninitialized: false,
+  store: new session.MemoryStore(),
+  cookie: {
+    httpOnly: true,
+    secure: false,
+    maxAge: 60000 * 60 * 24
   }
 }));
 
@@ -32,13 +34,16 @@ connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
 });
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
+
 const boatsRouter = require('./routes/boats');
 const requestsRouter = require('./routes/requests');
 const usersRouter = require('./routes/users');
 
-app.use('/boats', boatsRouter);
-app.use('/requests', requestsRouter);
-app.use('/users', usersRouter);
+app.use('/api/boats', boatsRouter);
+app.use('/api/requests', requestsRouter);
+app.use('/api/users', usersRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

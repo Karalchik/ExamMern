@@ -7,13 +7,28 @@ router.route('/').get((req,res)=>{
 
 
 router.route('/auth').get((req,res)=>{
-    if(req.session.username){
-      return res.json({valid:true,username:req.session.username})
+  console.log('/auth:\n',req.cookies);
+  console.log(req.session);
+    if(req.session.user){
+      return res.json({valid:true,user:req.session.user})
     }
     else{
       return res.json({valid:false})
     }
-  })
+  });
+
+router.route('/login').post((req,res)=>{
+  console.log('/login:\n',req.cookies);
+  User.findOne({email: req.body.email,password:req.body.password}).then((user) => {
+    if(user){
+      req.session.user=user;
+      req.session.save();
+      res.json({Login:true});
+    }else{
+      res.json({Login:false});
+    }
+    res.send();
+  })});
 
 router.route('/add').post((req,res)=>{
     console.log(req.body);
