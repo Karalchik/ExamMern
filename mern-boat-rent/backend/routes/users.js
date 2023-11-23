@@ -7,8 +7,6 @@ router.route('/').get((req,res)=>{
 
 
 router.route('/auth').get((req,res)=>{
-  console.log('/auth:\n',req.cookies);
-  console.log(req.session);
     if(req.session.user){
       return res.json({valid:true,user:req.session.user})
     }
@@ -18,7 +16,6 @@ router.route('/auth').get((req,res)=>{
   });
 
 router.route('/login').post((req,res)=>{
-  console.log('/login:\n',req.cookies);
   User.findOne({email: req.body.email,password:req.body.password}).then((user) => {
     if(user){
       req.session.user=user;
@@ -27,8 +24,13 @@ router.route('/login').post((req,res)=>{
     }else{
       res.json({Login:false});
     }
-    res.send();
+    return res;
   })});
+
+router.route('/logout').post((req,res)=>{
+      req.session.user=undefined;
+      req.session.save();
+  });
 
 router.route('/add').post((req,res)=>{
     console.log(req.body);

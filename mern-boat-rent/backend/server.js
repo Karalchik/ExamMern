@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-//const proxy = require('express-http-proxy');
 
 require('dotenv').config();
 
@@ -15,7 +14,7 @@ app.use(express.json());
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(cookieParser());
 app.use(session({
-  secret: 'kljhdf ldfks jh 45jh',
+  secret: 'secret',
   resave: false,
   saveUninitialized: false,
   store: new session.MemoryStore(),

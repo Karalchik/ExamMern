@@ -55,10 +55,7 @@ export default class LoginUser extends Component {
           this.setState({
             text:""
           });
-          //
-          axios.get('users/auth').then(res=>{console.log(res.data);});
-        //
-          //window.location.assign('/');
+          window.location.assign('/');
         }
         else{
           this.setState({
@@ -71,24 +68,6 @@ export default class LoginUser extends Component {
           text:"Your email is incorrect"
         });
       }
-
-      // axios.get('http://localhost:5000/users/').then(response=>{
-      //   this.setState({users:response.data});
-      // }).catch((error)=>{
-      //   console.log(error);
-      // })
-
-      // if(this.validateEmail(this.state.email)){
-      //   this.state.users.forEach((user)=>{
-      //     if(user.email===newUser.email && user.password===newUser.password){
-      //       window.location.assign('/');
-      //     }else{
-      //       this.state.text="Your email or password is incorrect";
-      //     }
-      //   })
-      // }else{
-      //   this.state.text="Your email is incorrect";
-      // }
 
     }
   render() {
