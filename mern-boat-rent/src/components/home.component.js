@@ -77,11 +77,6 @@ export default class Home extends Component{
                           <div class="row pt-1">
                             
                           </div>
-                          <hr class="mt-0 mb-4"/>
-                          <div class="row pt-1">
-                            <button className="btn btn-danger" style={{maxWidth:"25%"}} onClick={this.onLogout}>Log Out</button>
-                            <button className="btn btn-primary" style={{maxWidth:"75%"}} onClick={this.onChange} >Change Data</button>
-                          </div> 
                         </div>
                       </div>
                     </div>
