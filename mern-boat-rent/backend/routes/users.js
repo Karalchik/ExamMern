@@ -19,6 +19,7 @@ router.route('/login').post((req,res)=>{
   User.findOne({email: req.body.email,password:req.body.password}).then((user) => {
     if(user){
       req.session.user=user;
+      req.session.isLoged=true;
       req.session.save();
       res.json({Login:true});
     }else{
@@ -29,6 +30,7 @@ router.route('/login').post((req,res)=>{
 
 router.route('/logout').post((req,res)=>{
       req.session.user=undefined;
+      req.session.isLoged=false;
       req.session.save();
   });
 

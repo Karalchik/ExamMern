@@ -53,8 +53,22 @@ const profileMenuItems = [
  
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isLoged, setIsLoged] = React.useState(false);
  
   const closeMenu = () => setIsMenuOpen(false);
+  
+  React.useEffect(() => {
+    axios.get('users/auth', {
+      withCredentials: true,
+    }).then(res=>{
+    if(res.data.valid){
+       setIsLoged(true);
+       document.getElementById("menu").addEventListener('click',()=>{});
+    }else{
+      setIsLoged(false);
+      document.getElementById("menu").addEventListener('click',()=>{window.location.assign('login_user')});
+    }}).catch(err=>console.log(err));
+  });
  
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end" >
@@ -68,16 +82,20 @@ function ProfileMenu() {
             variant="circular"
             size="sm"
             className="border border-gray-900 p-0.5"
+            id="menu"
             src="https://st2.depositphotos.com/1104517/11967/v/950/depositphotos_119675554-stock-illustration-male-avatar-profile-picture-vector.jpg"
           />
+          { isLoged ? 
           <ChevronDownIcon
             strokeWidth={2.5}
             className={`h-3 w-3 transition-transform ${
               isMenuOpen ? "rotate-180" : ""
             }`}
           />
+          : null }
         </Button>
       </MenuHandler>
+      { isLoged ?  
       <MenuList className="p-1">
         {profileMenuItems.map(({ label, icon }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
@@ -144,7 +162,7 @@ function ProfileMenu() {
             return (
               <MenuItem
                 key={label}
-                onClick={closeMenu}
+                onClick={()=>window.location.assign('/profile')}
                 className={`flex items-center gap-2 rounded ${
                   isLastItem
                     ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
@@ -170,7 +188,7 @@ function ProfileMenu() {
             return (
               <MenuItem
                 key={label}
-                onClick={closeMenu}
+                onClick={()=>window.location.assign('/edit_user')}
                 className={`flex items-center gap-2 rounded ${
                   isLastItem
                     ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
@@ -194,6 +212,7 @@ function ProfileMenu() {
           }
         })}
       </MenuList>
+      : null }
     </Menu>
   );
 }
@@ -201,36 +220,36 @@ function ProfileMenu() {
 // nav list menu
 const navListBoatMenuItems = [
   {
+    title: "RENT A BOAT",
+    location:"/rentaboat",
+  },
+  {
     title: "FIND A BOAT",
-    onClick:{},
+    location:"/findaboat",
   },
 ];
 const navListAboutMenuItems = [
   {
     title: "CONTACT",
-    onClick:{},
+    location:"/contact",
   },
   {
     title: "ABOUT US",
-    onClick:{},
+    location: "/aboutus",
   },
   {
     title: "FAQ",
-    onClick:{},
-  },
-  {
-    title: "INFORMATION",
-    onClick:{},
+    location:"/FAQ",
   },
 ];
  
 function NavListMenuBoat() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
  
-  const renderItems = navListBoatMenuItems.map(({ title,onClick }) => (
+  const renderItems = navListBoatMenuItems.map(({ title,location }) => (
     <a href="#" key={title}>
       <MenuItem>
-        <Button color="blue-gray" fullWidth className="mb-1" onClick={onClick}>
+        <Button color="blue-gray" fullWidth className="mb-1" onClick={()=>window.location=location}>
           {title}
         </Button>
       </MenuItem>
@@ -244,7 +263,7 @@ function NavListMenuBoat() {
           <Typography as="a" href="#" variant="small" className="font-normal">
             <MenuItem className="hidden items-center gap-2 font-medium text-blue-gray-900 lg:flex lg:rounded-full">
               <ShoppingBagIcon className="h-[18px] w-[18px] text-blue-gray-500" />{" "}
-              RENT A BOAT{" "}
+              BOATS{" "}
               <ChevronDownIcon
                 strokeWidth={2}
                 className={`h-3 w-3 transition-transform ${
@@ -262,7 +281,7 @@ function NavListMenuBoat() {
       </Menu>
       <MenuItem className="flex items-center gap-2 font-medium text-blue-gray-900 lg:hidden">
         <Square3Stack3DIcon className="h-[18px] w-[18px] text-blue-gray-500" />{" "}
-        RENT A BOAT{" "}
+        BOATS{" "}
       </MenuItem>
       <ul className="ml-6 flex w-full flex-col gap-1 lg:hidden">
         {renderItems}
@@ -274,10 +293,10 @@ function NavListMenuBoat() {
 function NavListMenuAbout() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
  
-  const renderItems = navListAboutMenuItems.map(({ title,onClick }) => (
+  const renderItems = navListAboutMenuItems.map(({ title,location }) => (
     <a href="#" key={title}>
       <MenuItem>
-        <Button color="blue-gray" fullWidth className="mb-1" onClick={onClick}>
+        <Button color="blue-gray" fullWidth className="mb-1" onClick={()=>window.location=location}>
           {title}
         </Button>
       </MenuItem>
@@ -391,7 +410,7 @@ export default class NavbarComp extends Component {
           variant='h4'
           color="blue"
         >
-          <Link to="/">BLUE SHELL</Link>
+          <Link to="/"><Avatar src="https://creazilla-store.fra1.digitaloceanspaces.com/icons/3245625/blue-shell-icon-md.png"></Avatar>BLUE SHELL</Link>
         </Typography>
         <div className="hidden lg:block">
           <NavList />

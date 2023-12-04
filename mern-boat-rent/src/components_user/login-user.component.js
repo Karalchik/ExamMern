@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import axios from '../http-common';
+import Icon from "../components/icon.component";
 import {
   Card,
   Input,
   Checkbox,
   Button,
   Typography,
+  Alert,
 } from "@material-tailwind/react";
 
 export default class LoginUser extends Component {
@@ -61,7 +63,7 @@ export default class LoginUser extends Component {
           this.setState({
             text:""
           });
-          window.location.assign('/');
+          window.location.assign('/profile');
         }
         else{
           this.setState({
@@ -78,114 +80,73 @@ export default class LoginUser extends Component {
     }
   render() {
     return (
-      //   <div>
-      //   <h3>Sign-In</h3>
-      //   <form onSubmit={this.onSubmit}>
-      //     <div className=""> 
-      //         <label>Email: </label>
-      //         <input  type="text"
-      //           required
-      //           placeholder='Enter Email'
-      //           className=""
-      //           value={this.state.email}
-      //           onChange={this.onChangeEmail}
-      //         />
-      //         <div>
-      //           <label>Password: </label>
-      //           <input type="checkbox" onClick={this.onCheckShow}/>Show Password
-      //         </div>
-      //         <input  type="password"
-      //           required
-      //           placeholder='Enter Password'
-      //           className=""
-      //           value={this.state.password}
-      //           onChange={this.onChangePassword}
-      //           id="password"
-      //         />
-              // <div className="">
-              //   <small>{this.state.text}</small>
-              // </div>
-      //     </div>
-      //     <div className="">
-      //     <Button color="blue" variant="gradient" >
-      //       <input type="submit" value="Sign-In" className="" />
-      //     </Button>
-          
-      //     <Button variant="gradient" color="blue" onClick={()=>{window.location.assign('create_user')}}>
-      //       Sign-Up
-      //     </Button>
-      //     </div>
-      //   </form>
-      // </div>
-      <div style={{textAlign:"center"}}>
-    <Card color="transparent" shadow={false} >
-      <Typography variant="h3" className="text-light-blue-500">
-        Sign In
-      </Typography>
-      <Typography className="mt-1 font-normal text-blue-gray-400">
-        Hello again! Enter your details to login.
-      </Typography>
-      <center>
-      <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
-        <div className="mb-1 flex flex-col gap-6">
-        <Typography variant="h6" className="-mb-3 text-light-blue-300">
-            Your Email
+      <div class="container mx-auto px-4 rounded-3xl bSty heightTo backimgInUp centered" style={{ textAlign: "center", height: "790px" }}>
+        <Card color="transparent" shadow={false} >
+          <Typography variant="h3" className="text-light-blue-500">
+            Sign In
           </Typography>
-          <Input
-            size="lg"
-            placeholder="email@mail.com"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-            value={this.state.email}
-            onChange={this.onChangeEmail}
-          />
-          <Typography variant="h6" className="-mb-3 text-light-blue-300">
-            Password
+          <Typography className="mt-1 font-normal text-white">
+            Hello again! Enter your details to login.
           </Typography>
-          <Input
-            type="password"
-            size="lg"
-            placeholder="********"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-            value={this.state.password}
-            onChange={this.onChangePassword}
-            id="password"
-          />
-          <div className="">
-                <small style={{color:"red"}}>{this.state.text}</small>
-          </div>
-        </div>
-        <div>
-          <Checkbox color="blue"
-          label={
-            <Typography
-              variant="small"
-              color="gray"
-              className="flex items-center font-small">
-              Show Password
-            </Typography>
-          }
-          containerProps={{ className: "-ml-2.5" }}
-          onClick={()=>this.onCheckShow()}
-          /> 
-        </div>
-        <Button className="mt-6" fullWidth  onClick={this.onSubmit} variant="gradient" color="blue">
-          sign in
-        </Button>
-        <Typography color="gray" className="mt-4 text-center font-normal">
-          Don't have an account?{" "}
-          <a href="create_user" className="font-medium text-light-blue-300">
-            Sign Up
-          </a>
-        </Typography>
-      </form></center>
-    </Card>
-    </div>
+          <center>
+            <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+              <div className="mb-1 flex flex-col gap-6">
+                <Typography variant="h6" className="-mb-3 text-light-blue-300">
+                  Your Email
+                </Typography>
+                <Input
+                  size="lg"
+                  placeholder="email@mail.com"
+                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900 bg-white"
+                  labelProps={{
+                    className: "before:content-none after:content-none",
+                  }}
+                  value={this.state.email}
+                  onChange={this.onChangeEmail}
+                />
+                <Typography variant="h6" className="-mb-3 text-light-blue-300">
+                  Password
+                </Typography>
+                <Input
+                  type="password"
+                  size="lg"
+                  placeholder="********"
+                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900 bg-white"
+                  labelProps={{
+                    className: "before:content-none after:content-none",
+                  }}
+                  value={this.state.password}
+                  onChange={this.onChangePassword}
+                  id="password"
+                />
+                {this.state.text != "" ? <Alert className='text-sm h-7.5 p-1 bg-orange-700 text-deep-orange-50' variants="gradient" icon={<Icon />}>{this.state.text}</Alert> : null}
+              </div>
+              <div>
+                <Checkbox color="blue"
+                  label={
+                    <Typography
+                      variant="small"
+                      color="white"
+                      className="flex items-center font-small">
+                      Show Password
+                    </Typography>
+                  }
+                  containerProps={{ className: "-ml-2.5" }}
+                  onClick={() => this.onCheckShow()}
+                />
+              </div>
+              <Button className="mt-6" fullWidth onClick={this.onSubmit} variant="gradient" color="blue">
+                sign in
+              </Button>
+              <Typography color="white" className="mt-4 text-center font-normal">
+                Don't have an account?{" "}
+                <a href="create_user" className="font-medium text-light-blue-300">
+                  Sign Up
+                </a>
+              </Typography>
+            </form></center>
+        </Card>
+      </div>
     )
   }
 }

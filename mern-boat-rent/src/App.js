@@ -4,7 +4,15 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./index.css";
 
 import NavbarComp from "./components/navbar.component"
+import FooterComp from "./components/footer.component"
 import Home from "./components/home.component"
+import Payment from "./components/payment.component"
+import Profile from "./components/profile.component"
+import ScrollTop from "./components/scrolltop.component"
+
+import AboutUs from "./components_about/aboutus.component"
+import Contact from "./components_about/contact.component"
+import FAQ from "./components_about/FAQ.component"
 
 import CreateUser from "./components_user/create-user.component";
 import EditUser from "./components_user/edit-user.component";
@@ -26,17 +34,27 @@ function App() {
   return (
     <Router>
       <div >
+        <br></br>
         <NavbarComp />
-        <br/>
+        <br></br>
         <Routes>
         <Route path="/" element={<Home />}></Route>
+        <Route path="/payment" element={<Payment />}></Route>
+        <Route path="/profile" element={<Profile />}></Route>
         <Route path="/create_user" element={<CreateUser />}></Route>
         <Route path="/edit_user" element={<EditUser />}></Route>
         <Route path="/help" element={<Help />}></Route>
         <Route path="/create_request" element={<CreateRequest />}></Route>
         <Route path="/create_boat" element={<CreateBoat />}></Route>
         <Route path="/login_user" element={<LoginUser />}></Route>
-        </Routes>  
+        <Route path="/aboutus" element={<AboutUs />}></Route>
+        <Route path="/contact" element={<Contact />}></Route>
+        <Route path="/FAQ" element={<FAQ />}></Route>
+        </Routes>
+        <br></br>
+        <FooterComp/>
+        <br></br>
+        <ScrollTop/>
       </div> 
     </Router>
   );

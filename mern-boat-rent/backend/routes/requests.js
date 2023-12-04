@@ -7,6 +7,7 @@ router.route('/').get((req,res)=>{
 
 router.route('/add').post((req,res)=>{
     const baseprice=Number(req.body.baseprice);
+    const boatID=req.body.boatID;
     const discount=Number(req.body.discount);
     const startdate=Date.parse(req.body.startdate);
     const enddate=Date.parse(req.body.enddate);
@@ -14,6 +15,7 @@ router.route('/add').post((req,res)=>{
 
     const newRequest=new Request({
         baseprice,
+        boatID,
         discount,
         startdate,
         enddate,
@@ -35,6 +37,7 @@ router.route('/update/:id').post((req, res) => {
     Request.findById(req.params.id)
       .then(request => {
         request.baseprice=Number(req.body.baseprice);
+        request.boatID=req.body.boatID;
         request.discount=Number(req.body.discount);
         request.startdate=Date.parse(req.body.startdate);
         request.enddate=Date.parse(req.body.enddate);

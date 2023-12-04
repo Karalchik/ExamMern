@@ -7,7 +7,8 @@ router.route('/').get((req,res)=>{
 
 router.route('/add').post((req,res)=>{
     const model=req.body.model;
-    const lenght=Number(req.body.lenght);
+    const image=req.body.image;
+    const length=Number(req.body.length);
     const cabins=Number(req.body.cabins);
     const persons=Number(req.body.persons);
     const WC=Number(req.body.WC);
@@ -15,10 +16,12 @@ router.route('/add').post((req,res)=>{
     const width=Number(req.body.width);
     const engine=req.body.engine;
     const beds=Number(req.body.beds);
+    const isUsing=Boolean(req.body.isUsing);
 
     const newBoat=new Boat({
         model,
-        lenght,
+        image,
+        length,
         cabins,
         persons,
         WC,
@@ -26,6 +29,7 @@ router.route('/add').post((req,res)=>{
         width,
         engine,
         beds,
+        isUsing,
     });
 
     newBoat.save().then(()=>res.json('Boat added!')).catch(err=>res.status(400).json('Error: '+err));
@@ -43,7 +47,8 @@ router.route('/update/:id').post((req, res) => {
     Boat.findById(req.params.id)
       .then(boat => {
         boat.model=req.body.model;
-        boat.lenght=Number(req.body.lenght);
+        boat.image=req.body.image;
+        boat.length=Number(req.body.length);
         boat.cabins=Number(req.body.cabins);
         boat.persons=Number(req.body.persons);
         boat.WC=Number(req.body.WC);
@@ -51,6 +56,7 @@ router.route('/update/:id').post((req, res) => {
         boat.width=Number(req.body.width);
         boat.engine=Number(req.body.engine);
         boat.beds=Number(req.body.beds);
+        boat.isUsing=Boolean(req.body.isUsing);
   
         boat.save()
           .then(() => res.json('Boat updated!'))
