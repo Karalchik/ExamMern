@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import axios from '../http-common';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import axios from "../http-common";
 import {
   Navbar,
   MobileNav,
@@ -30,6 +30,7 @@ import {
   PhoneIcon,
   ShoppingBagIcon,
   QuestionMarkCircleIcon,
+  AdjustmentsHorizontalIcon,
 } from "@heroicons/react/24/solid";
 
 const profileMenuItems = [
@@ -58,15 +59,15 @@ function ProfileMenu() {
   const closeMenu = () => setIsMenuOpen(false);
   
   React.useEffect(() => {
-    axios.get('users/auth', {
+    axios.get("users/auth", {
       withCredentials: true,
     }).then(res=>{
     if(res.data.valid){
        setIsLoged(true);
-       document.getElementById("menu").addEventListener('click',()=>{});
+       document.getElementById("menu").addEventListener("click",()=>{});
     }else{
       setIsLoged(false);
-      document.getElementById("menu").addEventListener('click',()=>{window.location.assign('login_user')});
+      document.getElementById("menu").addEventListener("click",()=>{window.location="/login_user"});
     }}).catch(err=>console.log(err));
   });
  
@@ -105,10 +106,10 @@ function ProfileMenu() {
                 key={label}
                 onClick={()=>
                   {
-                    axios.post('users/logout', {
+                    axios.post("users/logout", {
                       withCredentials: true,
                     })
-                    window.location.assign('login_user');
+                    window.location="/";
                   }
                 }
                 className={`flex items-center gap-2 rounded ${
@@ -136,7 +137,7 @@ function ProfileMenu() {
             return (
               <MenuItem
                 key={label}
-                onClick={()=>{window.location.assign('help');}}
+                onClick={()=>{window.location="/help"}}
                 className={`flex items-center gap-2 rounded ${
                   isLastItem
                     ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
@@ -162,7 +163,7 @@ function ProfileMenu() {
             return (
               <MenuItem
                 key={label}
-                onClick={()=>window.location.assign('/profile')}
+                onClick={()=>window.location="/profile"}
                 className={`flex items-center gap-2 rounded ${
                   isLastItem
                     ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
@@ -188,7 +189,7 @@ function ProfileMenu() {
             return (
               <MenuItem
                 key={label}
-                onClick={()=>window.location.assign('/edit_user')}
+                onClick={()=>window.location="/edit_user"}
                 className={`flex items-center gap-2 rounded ${
                   isLastItem
                     ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
@@ -221,11 +222,17 @@ function ProfileMenu() {
 const navListBoatMenuItems = [
   {
     title: "RENT A BOAT",
-    location:"/rentaboat",
+    location:"/rent_boat",
+  },
+];
+const navListAdminMenuItems = [
+  {
+    title: "VIEW BOATS",
+    location:"/admin_rent_boat",
   },
   {
-    title: "FIND A BOAT",
-    location:"/findaboat",
+    title: "ADD BOAT",
+    location:"/create_boat",
   },
 ];
 const navListAboutMenuItems = [
@@ -242,12 +249,12 @@ const navListAboutMenuItems = [
     location:"/FAQ",
   },
 ];
- 
-function NavListMenuBoat() {
+
+function NavListMenuAdmin() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
  
-  const renderItems = navListBoatMenuItems.map(({ title,location }) => (
-    <a href="#" key={title}>
+  const renderItems = navListAdminMenuItems.map(({ title,location }) => (
+    <a key={title}>
       <MenuItem>
         <Button color="blue-gray" fullWidth className="mb-1" onClick={()=>window.location=location}>
           {title}
@@ -260,7 +267,54 @@ function NavListMenuBoat() {
     <React.Fragment>
       <Menu allowHover open={isMenuOpen} handler={setIsMenuOpen}>
         <MenuHandler>
-          <Typography as="a" href="#" variant="small" className="font-normal">
+          <Typography as="a" href="/create_boat" variant="small" className="font-normal">
+            <MenuItem className="hidden items-center gap-2 font-medium text-blue-gray-900 lg:flex lg:rounded-full">
+              <AdjustmentsHorizontalIcon className="h-[18px] w-[18px] text-blue-gray-500" />{" "}
+              ADMIN COMANDS{" "}
+              <ChevronDownIcon
+                strokeWidth={2}
+                className={`h-3 w-3 transition-transform ${
+                  isMenuOpen ? "rotate-180" : ""
+                }`}
+              />
+            </MenuItem>
+          </Typography>
+        </MenuHandler>
+        <MenuList className="hidden w-[5rem] overflow-visible lg:grid">
+          <ul className="flex w-full flex-col gap-1">
+            {renderItems}
+          </ul>
+        </MenuList>
+      </Menu>
+      <MenuItem className="flex items-center gap-2 font-medium text-blue-gray-900 lg:hidden">
+        <Square3Stack3DIcon className="h-[18px] w-[18px] text-blue-gray-500" />{" "}
+        ADMIN COMANDS{" "}
+      </MenuItem>
+      <ul className="ml-6 flex w-full flex-col gap-1 lg:hidden">
+        {renderItems}
+      </ul>
+    </React.Fragment>
+  );
+}
+ 
+function NavListMenuBoat() {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+ 
+  const renderItems = navListBoatMenuItems.map(({ title,location }) => (
+    <a href="/rent_boat" key={title}>
+      <MenuItem>
+        <Button color="blue-gray" fullWidth className="mb-1" onClick={()=>window.location=location}>
+          {title}
+        </Button>
+      </MenuItem>
+    </a>
+  ));
+ 
+  return (
+    <React.Fragment>
+      <Menu allowHover open={isMenuOpen} handler={setIsMenuOpen}>
+        <MenuHandler>
+          <Typography as="a" href="/rent_boat" variant="small" className="font-normal">
             <MenuItem className="hidden items-center gap-2 font-medium text-blue-gray-900 lg:flex lg:rounded-full">
               <ShoppingBagIcon className="h-[18px] w-[18px] text-blue-gray-500" />{" "}
               BOATS{" "}
@@ -294,7 +348,7 @@ function NavListMenuAbout() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
  
   const renderItems = navListAboutMenuItems.map(({ title,location }) => (
-    <a href="#" key={title}>
+    <a key={title}>
       <MenuItem>
         <Button color="blue-gray" fullWidth className="mb-1" onClick={()=>window.location=location}>
           {title}
@@ -307,7 +361,7 @@ function NavListMenuAbout() {
     <React.Fragment>
       <Menu allowHover open={isMenuOpen} handler={setIsMenuOpen}>
         <MenuHandler>
-          <Typography as="a" href="#" variant="small" className="font-normal">
+          <Typography as="a" href="/aboutus" variant="small" className="font-normal">
             <MenuItem className="hidden items-center gap-2 font-medium text-blue-gray-900 lg:flex lg:rounded-full">
               <QuestionMarkCircleIcon className="h-[18px] w-[18px] text-blue-gray-500" />{" "}
               ABOUT{" "}
@@ -346,6 +400,17 @@ const navListItems = [
 ];
  
 function NavList() {
+  const [isAdmin, setIsAdmin] = React.useState(false);
+  React.useEffect(() => {
+    axios.get("users/auth", {
+      withCredentials: true,
+    }).then(res=>{
+    if(res.data.valid&&res.data.user.isadmin===true){
+      setIsAdmin(true);
+    }else{
+      setIsAdmin(false);
+    }}).catch(err=>console.log(err));
+  });
   return (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
       {navListItems.map(()=>(     
@@ -366,11 +431,12 @@ function NavList() {
       
       <NavListMenuBoat />
       <NavListMenuAbout />
+      {isAdmin?<NavListMenuAdmin />:null}
       {navListItems.map(({ label, icon }, key) => (
         <Typography
           key={label}
           as="a"
-          href="/"
+          href="tel:8882192787"
           variant="small"
           color="gray"
           className="font-medium text-blue-gray-500"
@@ -405,9 +471,9 @@ export default class NavbarComp extends Component {
       <div className="relative mx-auto flex items-center justify-between text-blue-gray-900">
         <Typography
           as="a"
-          href="#"
+          href="/"
           className="mr-4 ml-2 cursor-pointer py-1.5 font-small"
-          variant='h4'
+          variant="h4"
           color="blue"
         >
           <Link to="/"><Avatar src="https://creazilla-store.fra1.digitaloceanspaces.com/icons/3245625/blue-shell-icon-md.png"></Avatar>BLUE SHELL</Link>

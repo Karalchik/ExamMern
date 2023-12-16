@@ -5,6 +5,8 @@ const Schema=mongoose.Schema;
 const boatSchema=new Schema({
     model:{type:String,required:true},
     image:{type:String,required:true},
+    baseprice:{type:Number,required:true},
+    discount:{type:Number,required:true},
     length:{type:Number,required:true},
     cabins:{type:Number,required:true},
     persons:{type:Number,required:true},

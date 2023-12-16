@@ -16,15 +16,14 @@ export default class CreateUser extends Component {
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
-    this.onChangeContacts = this.onChangeContacts.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onAgree = this.onAgree.bind(this);
 
     this.state = {
       username: '',
-      contacts: '',
+      contacts: '+380000000000',
       email: '',
-      history: new Array(),
+      history: [],
       password: '',
       isadmin: false,
       text: '',
@@ -59,11 +58,6 @@ export default class CreateUser extends Component {
       password: e.target.value
     });
   }
-  onChangeContacts(e) {
-    this.setState({
-      contacts: e.target.value
-    });
-  }
 
   onCheckShow() {
     var x = document.getElementById("password");
@@ -88,23 +82,17 @@ export default class CreateUser extends Component {
         isadmin: this.state.isadmin,
       };
 
-      axios.post('http://localhost:5000/users/add', newUser).then(res => console.log(res.data));
-
-      this.setState({
-        username: '',
-        contacts: '',
-        email: '',
-        history: new Array(),
-        password: '',
-        isadmin: false,
-      }).then(res => {
-        window.location.assign('/profile');
-      });
-    } else {
-      this.setState({
-        text: "Your email is incorrect"
-      });
-    }
+      axios.post('users/add', newUser).then(res =>{
+      axios.post('users/login',newUser).then(res=>{
+        if(res.data.Login){
+          this.setState({
+            text:""
+          });
+          window.location="/profile";
+        }
+      })
+      window.location="/profile";});
+    }  
   }
 
   render() {
@@ -161,7 +149,7 @@ export default class CreateUser extends Component {
                   onChange={this.onChangePassword}
                   id="password"
                 />
-                {this.state.text != "" ? <Alert className='text-sm h-7.5 p-1 bg-orange-700 text-deep-orange-50' variants="gradient" icon={<Icon />}>{this.state.text}</Alert> : null}
+                {this.state.text !== "" ? <Alert className='text-sm h-7.5 p-1 bg-orange-700 text-deep-orange-50' variants="gradient" icon={<Icon />}>{this.state.text}</Alert> : null}
               </div>
               <div class="inline-flex items-center">
                 <Checkbox text-light-blue-300 color="blue"
@@ -185,7 +173,7 @@ export default class CreateUser extends Component {
                     >
                       I agree the
                       <a
-                        href="#"
+                        href="/terms"
                         className="font-medium transition-colors hover:text-light-blue-300 text-teal-700"
                       >
                         &nbsp;Terms and Conditions
@@ -195,7 +183,7 @@ export default class CreateUser extends Component {
                   containerProps={{ className: "-ml-2.5" }}
                 />
               </div>
-              <Button className="mt-6" fullWidth onClick={() => this.onSubmit()} variant="gradient" color="blue">
+              <Button className="mt-6" fullWidth onClick={this.onSubmit} variant="gradient" color="blue">
                 sign up
               </Button>
               <Typography color="white" className="mt-4 text-center font-normal">

@@ -63,7 +63,7 @@ export default class LoginUser extends Component {
           this.setState({
             text:""
           });
-          window.location.assign('/profile');
+          window.location="/profile";
         }
         else{
           this.setState({
@@ -119,7 +119,7 @@ export default class LoginUser extends Component {
                   onChange={this.onChangePassword}
                   id="password"
                 />
-                {this.state.text != "" ? <Alert className='text-sm h-7.5 p-1 bg-orange-700 text-deep-orange-50' variants="gradient" icon={<Icon />}>{this.state.text}</Alert> : null}
+                {this.state.text !== "" ? <Alert className='text-sm h-7.5 p-1 bg-orange-700 text-deep-orange-50' variants="gradient" icon={<Icon />}>{this.state.text}</Alert> : null}
               </div>
               <div>
                 <Checkbox color="blue"

@@ -18,7 +18,7 @@ render() {
         <div class="intro">
             <h1>Blue Shell</h1>
             <p>This is a site for your own dreams witch you can take there.</p>
-            <button onClick={()=>{window.location='/boatrent'}}>Rent your Dream!</button>
+            <button onClick={()=>{window.location='/rent_boat'}}>Rent your Dream!</button>
         </div>
         <div class="wimg">
         <div class="achievements">
@@ -44,7 +44,9 @@ render() {
         <div class="about-me">
             <div class="about-me-text">
                 <h2>History of Our Company</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec suscipit et leo at luctus. Vestibulum arcu dui, aliquam id sapien vitae, porta laoreet ante. Aliquam sem mauris, porttitor vehicula libero sit amet, convallis sodales metus. Nullam malesuada condimentum odio, non maximus lacus tempor a. Morbi pulvinar molestie purus, vitae sagittis odio tristique nec. Proin eu finibus ipsum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent non arcu ex. Proin congue dui sit amet massa viverra auctor. In hac habitasse platea dictumst. Nam gravida placerat nunc, quis iaculis risus tempor eleifend. Praesent et tempus risus, vitae porttitor libero. Pellentesque sit amet lobortis sapien. Vivamus accumsan odio sit amet porta ultricies. Maecenas ut urna ut felis accumsan fermentum ut non justo. Donec pretium leo eget ex consectetur bibendum. Praesent in ipsum iaculis, egestas ante eu, imperdiet lacus. Cras volutpat varius pretium.</p>
+                <p>The story of your company’s evolution may seem uninspiring to you, but it can play an important role in building trust and respect, especially among younger generations of employees and customers — Gen Zs deeply care about an organization’s background and impact. 
+Every company has been shaped by moments of inspiration, perseverance, courage or luck.  Your company history should feature the most compelling highlights of your entrepreneurial journey, along with significant achievements, such as patents and major wins.
+You should include your history in your business plan and employee handbook and on your website’s “about us” page. Some companies write a book about their corporate story that is presented to employees and others on special occasions. The message behind your corporate milestones can become your brand’s cornerstone.</p>
             </div>
         </div>
         </div>

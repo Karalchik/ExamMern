@@ -5,18 +5,32 @@ router.route('/').get((req,res)=>{
     Request.find().then(request=>res.json(request)).catch(err=>res.statusMessage(400).json('Error: '+err));
 });
 
+router.route('/load').get((req,res)=>{
+    if(req.session.request){
+      return res.json({valid:true,request:req.session.request})
+    }
+    else{
+      return res.json({valid:false})
+    }
+  });
+
+router.route('/save').post((req,res)=>{
+      req.session.request=req.body;
+      res.json({Saved:true});
+      req.session.save();
+    return res;
+  });
+
 router.route('/add').post((req,res)=>{
-    const baseprice=Number(req.body.baseprice);
     const boatID=req.body.boatID;
-    const discount=Number(req.body.discount);
+    const userID=req.body.userID;
     const startdate=Date.parse(req.body.startdate);
     const enddate=Date.parse(req.body.enddate);
     const options=Array(req.body.options);
 
     const newRequest=new Request({
-        baseprice,
         boatID,
-        discount,
+        userID,
         startdate,
         enddate,
         options,
@@ -36,9 +50,8 @@ router.route('/:id').delete((req,res)=>{
 router.route('/update/:id').post((req, res) => {
     Request.findById(req.params.id)
       .then(request => {
-        request.baseprice=Number(req.body.baseprice);
         request.boatID=req.body.boatID;
-        request.discount=Number(req.body.discount);
+        request.userID=req.body.userID;
         request.startdate=Date.parse(req.body.startdate);
         request.enddate=Date.parse(req.body.enddate);
         request.options=Array(req.body.options);

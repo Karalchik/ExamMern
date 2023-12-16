@@ -10,34 +10,58 @@
     min-height: 60%;
     color: white;
 } 
+.cardSmall {
+    box-shadow: 4px 4px 8px 8px rgba(0, 0, 0, 0.2);
+    margin: 8px;
+} 
+
 .imgProf{
     max-width: 200px;
     max-height: 200px;
     border: 0.2px white solid;
     border-radius: 50%;
 }
+
 .about-section {
     padding: 50px;
     text-align: center;
     color: white;
 }
+
 .column{
     float: left;
     height:590px;
     width: 50%;
 }
+
+.autoColl{
+    float: left;
+}
+.autoColl2{
+    float: left;
+    width: 18%;
+}
+
 .row{
     display: flex;
     width: 80%;
 }
+
+.view{
+    display: flex;
+    width: 33%;
+}
+
 .maps{
     width: 100%;
     height: 100%;
-    border:0.5px solid white;
+    border:0.1px solid white;
 }
+
 .blure{
     background-color: #3333336e;
 }
+
 .maps.left{
     border-top-left-radius: 7%;
     border-bottom-left-radius: 7%;
@@ -45,4 +69,15 @@
 .maps.right{
     border-top-right-radius: 7%;
     border-bottom-right-radius: 7%;
+}
+
+.maps.left2T{
+    border-top-left-radius: 7%;
+}
+.maps.right2T{
+    border-top-right-radius: 7%;
+}
+.maps.bottom2{
+    border-bottom-left-radius: 2em;
+    border-bottom-right-radius: 2em;
 }

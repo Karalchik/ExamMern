@@ -8,6 +8,8 @@ router.route('/').get((req,res)=>{
 router.route('/add').post((req,res)=>{
     const model=req.body.model;
     const image=req.body.image;
+    const baseprice=Number(req.body.baseprice);
+    const discount=Number(req.body.discount);
     const length=Number(req.body.length);
     const cabins=Number(req.body.cabins);
     const persons=Number(req.body.persons);
@@ -21,6 +23,8 @@ router.route('/add').post((req,res)=>{
     const newBoat=new Boat({
         model,
         image,
+        baseprice,
+        discount,
         length,
         cabins,
         persons,
@@ -36,11 +40,11 @@ router.route('/add').post((req,res)=>{
 });
 
 router.route('/:id').get((req,res)=>{
-    Boat.findById(req.params.id).then(boat=>res.json(boat)).catch(err=>res,statuse(400).json('Error: '+err));
+    Boat.findById(req.params.id).then(boat=>res.json(boat)).catch(err=>res.status(400).json('Error: '+err));
 });
 
 router.route('/:id').delete((req,res)=>{
-    Boat.findByIdAndDelete(req.params.id).then(()=>res.json('Boat deleted.')).catch(err=>res,statuse(400).json('Error: '+err));
+    Boat.findByIdAndDelete(req.params.id).then(()=>res.json('Boat deleted.')).catch(err=>res.status(400).json('Error: '+err));
 });
 
 router.route('/update/:id').post((req, res) => {
@@ -48,13 +52,15 @@ router.route('/update/:id').post((req, res) => {
       .then(boat => {
         boat.model=req.body.model;
         boat.image=req.body.image;
+        boat.baseprice=Number(req.body.baseprice);
+        boat.discount=Number(req.body.discount);
         boat.length=Number(req.body.length);
         boat.cabins=Number(req.body.cabins);
         boat.persons=Number(req.body.persons);
         boat.WC=Number(req.body.WC);
         boat.year=Number(req.body.year);
         boat.width=Number(req.body.width);
-        boat.engine=Number(req.body.engine);
+        boat.engine=req.body.engine;
         boat.beds=Number(req.body.beds);
         boat.isUsing=Boolean(req.body.isUsing);
   

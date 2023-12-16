@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Card, Typography } from "@material-tailwind/react";
+import { Card, IconButton, Typography } from "@material-tailwind/react";
 import axios from '../http-common';
-import { CheckBadgeIcon } from '@heroicons/react/24/solid';
+import {
+  ArrowLeftCircleIcon,
+} from "@heroicons/react/24/solid";
 
-const TABLE_HEAD = ["Base Price", "Discount", "Start Date", "End Date" , "Options"];
+const TABLE_HEAD = ["Boat Code","Start Date", "End Date" , "Options"];
  
 
 export default class Home extends Component{
@@ -11,7 +13,6 @@ export default class Home extends Component{
     constructor(props){
         super(props);
         this.state={user:[],requests:[]};
-        this.somethingsToDo();
     }
 
     TABLE_ROWS = [
@@ -19,12 +20,23 @@ export default class Home extends Component{
     ];
 
     componentDidMount(){
+      this.somethingsToDo();
       axios.get('http://localhost:5000/api/requests/').then(response=>{
-        this.setState({requests:response.data});
+          var arr=[];
+        response.data.forEach(element => {
+          if(element.userID===this.state.user._id){
+            arr.push(element);
+            console.log(element.options[0].at(1))
+          }
+        });
+          this.setState({
+            requests:arr
+          })
       }).catch((error)=>{
         console.log(error);
       })
     }
+
     commonDate(object){
       var a =new Date(object);
       return a.toLocaleDateString('en-GB');
@@ -38,10 +50,9 @@ export default class Home extends Component{
           this.setState({
             user:res.data.user
           })
-            console.log(this.state.user);
         }
         else{
-            window.location.assign('login_user');
+            window.location="login_user";
         }
     }).catch(err=>console.log(err));
     }
@@ -88,16 +99,12 @@ export default class Home extends Component{
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.requests.map(({baseprice,discount,startdate,enddate,options}, index) => (
+                            {this.state.requests.map(({boatID,startdate,enddate,options}) => (
                             <tr className="even:bg-blue-gray-50/50">
                             <td className="p-4">
                                 <Typography variant="small" color="blue-gray" className="font-normal">
-                                    {baseprice}$
-                                </Typography>
-                            </td>
-                            <td className="p-4">
-                                <Typography variant="small" color="blue-gray" className="font-normal">
-                                    {discount}%
+                                  <IconButton className='py-0' style={{width:"3em",height:"3em",marginRight:"1em"}} color='blue' onClick={()=>window.location="/buy_boat/"+boatID}><ArrowLeftCircleIcon className='h-6 w-6'></ArrowLeftCircleIcon></IconButton>
+                                  {boatID}
                                 </Typography>
                             </td>
                             <td className="p-4">
@@ -111,8 +118,10 @@ export default class Home extends Component{
                                 </Typography>
                             </td>
                             <td className="p-4">
-                                <Typography variant="small" color="blue-gray" className="font-normal">
-                                    {options}
+                                <Typography color="blue-gray" className="font-normal">
+                                      Include Capitan: {options[0].at(0).Capitan?<>Yes</>:<>No</>}
+                                      <hr></hr>
+                                      Include Dishes: {options[0].at(1).Dishes?<>Yes</>:<>No</>}
                                 </Typography>
                             </td>
                             </tr>

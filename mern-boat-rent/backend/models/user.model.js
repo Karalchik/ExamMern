@@ -16,10 +16,9 @@ const userSchema=new Schema({
         unique:true,
         minlength:3
     },
-    password:{type:String,requred:true,minlength:5},
+    password:{type:String,requred:true,minlength:4},
     isadmin:{type:Boolean,requred:true},
     contacts:{type:String,requred:true,minlength:3},
-    history:{type:Array,requred:true},
 },{
     timestamps:true,
 

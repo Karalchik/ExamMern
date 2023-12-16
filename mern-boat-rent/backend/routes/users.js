@@ -37,17 +37,32 @@ router.route('/logout').post((req,res)=>{
 router.route('/add').post((req,res)=>{
     console.log(req.body);
     const username=req.body.username;
-    const password=req.body.passwort;
+    const password=req.body.password;
     const email=req.body.email;
     const isadmin=Boolean(req.body.isadmin);
     const contacts=req.body.contacts;
-    const history=Array(req.body.history);
-    const newUser=new User({username,password,email,isadmin,contacts,history});
+    const newUser=new User({username,password,email,isadmin,contacts});
     newUser.save().then(()=>res.json('User added!')).catch(err=>res.status(400).json('Error: '+err));
 });
 
 router.route('/:id').get((req,res)=>{
-    User.findById(req.params.id).then(user=>res.json(user)).catch(err=>res,statuse(400).json('Error: '+err));
+    User.findById(req.params.id).then(user=>res.json(user)).catch(err=>res.status(400).json('Error: '+err));
+});
+
+router.route('/update/:id').post((req, res) => {
+  User.findById(req.params.id)
+    .then(user => {
+      user.username=req.body.username;
+      user.password=req.body.password;
+      user.email=req.body.email;
+      user.isadmin=Boolean(req.body.isadmin);
+      user.contacts=req.body.contacts;
+
+      user.save()
+        .then(() => res.json('User updated!'))
+        .catch(err => res.status(400).json('Error: ' + err));
+    })
+    .catch(err => res.status(400).json('Error: ' + err));
 });
 
 module.exports=router;
